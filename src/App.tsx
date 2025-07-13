@@ -53,10 +53,14 @@ function App() {
       <header className="relative z-10 px-6 py-8">
         <nav className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-yellow-500 rounded-lg flex items-center justify-center relative">
+            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-yellow-500 rounded-lg flex items-center justify-center relative group">
               <Compass className="w-6 h-6 text-white" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center">
-                <Star className="w-2 h-2 text-red-600" />
+              <div className="absolute -top-1 -right-1 w-4 h-3 rounded-sm overflow-hidden border border-white/20 shadow-lg">
+                <div className="w-full h-1/2 bg-red-600"></div>
+                <div className="w-full h-1/2 bg-white"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Star className="w-1.5 h-1.5 text-red-600" />
+                </div>
               </div>
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
