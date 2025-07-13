@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import 'flag-icons/css/flag-icons.min.css';
 import { 
   TrendingUp as TrendingUpIcon, 
   Star, 
@@ -31,6 +32,15 @@ import {
 function App() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [githubStats, setGithubStats] = useState<{stars: number, forks: number} | null>(null);
+
+  useEffect(() => {
+    fetch('https://api.github.com/repos/boubakerwa/producthunt-tunisie')
+      .then(res => res.json())
+      .then(data => {
+        setGithubStats({ stars: data.stargazers_count, forks: data.forks_count });
+      });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,19 +75,15 @@ function App() {
           backgroundSize: '100px 100px'
         }}></div>
       </div>
-
+      
       {/* Header */}
       <header className="relative z-10 px-6 py-8">
         <nav className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-yellow-500 rounded-lg flex items-center justify-center relative group">
+            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-yellow-500 rounded-lg flex items-center justify-center relative">
               <Compass className="w-6 h-6 text-white" />
-              <div className="absolute -top-1 -right-1 w-4 h-3 rounded-sm overflow-hidden border border-white/20 shadow-lg">
-                <div className="w-full h-1/2 bg-red-600"></div>
-                <div className="w-full h-1/2 bg-white"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Star className="w-1.5 h-1.5 text-red-600" />
-                </div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center">
+                <Star className="w-2 h-2 text-red-600" />
               </div>
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
@@ -116,6 +122,9 @@ function App() {
               à la Tunisienne
             </span>
           </h1>
+          <div className="flex justify-center mb-4">
+            <span className="fi fi-tn rounded-lg shadow" style={{ width: 40, height: 28, display: 'inline-block' }} />
+          </div>
 
           {/* Subtitle */}
           <p className="text-xl md:text-2xl text-gray-300 mb-16 max-w-4xl mx-auto leading-relaxed">
@@ -393,6 +402,18 @@ function App() {
             <Heart className="w-5 h-5 text-red-500" />
             <span className="text-gray-400">Conçu avec amour pour l'écosystème entrepreneurial tunisien</span>
           </div>
+          <div className="mb-4">
+            <span className="text-sm text-gray-400 font-semibold">Made in Tunisia <span role="img" aria-label="Tunisian flag">🇹🇳</span></span>
+          </div>
+         <div className="mb-4 flex items-center justify-center gap-4">
+           <a href="https://github.com/boubakerwa/producthunt-tunisie" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+             <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.69 5.41-5.25 5.7.42.36.79 1.09.79 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12c0-6.27-5.23-11.5-12-11.5z"/></svg>
+             <span>GitHub</span>
+           </a>
+           {githubStats && (
+             <span className="text-xs text-gray-400">★ {githubStats.stars} | Forks: {githubStats.forks}</span>
+           )}
+         </div>
 
           <div className="text-sm text-gray-500 space-x-6">
             <a href="#" className="hover:text-gray-300 transition-colors">Politique de confidentialité</a>
