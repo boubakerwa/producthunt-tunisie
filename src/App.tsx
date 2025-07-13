@@ -26,13 +26,15 @@ import {
   Github,
   Linkedin,
   Calendar,
-  Gift
+  Gift,
+  Hand
 } from 'lucide-react';
 
 function App() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [githubStats, setGithubStats] = useState<{stars: number, forks: number} | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetch('https://api.github.com/repos/boubakerwa/producthunt-tunisie')
@@ -66,7 +68,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -93,7 +95,10 @@ function App() {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#" className="text-gray-300 hover:text-white transition-colors">À propos</a>
             <a href="#" className="text-gray-300 hover:text-white transition-colors">Contact</a>
-            <button className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105"
+            >
               Rejoindre la liste d'attente
             </button>
           </div>
@@ -102,17 +107,24 @@ function App() {
 
       {/* Hero Section */}
       <main className="relative z-10 px-6 pt-16 pb-32">
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="absolute inset-0 top-0 left-0 w-full h-full z-0 overflow-visible">
+            <svg viewBox="0 0 100 100" className="absolute -top-1/4 -left-1/4 w-[150%] h-[150%] opacity-[0.02] text-white" preserveAspectRatio="xMidYMid meet">
+                <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="40" fill="currentColor" style={{fontFamily: "'Marhey', cursive"}}>
+                    إبداع
+                </text>
+            </svg>
+        </div>
+        <div className="max-w-5xl mx-auto text-center relative z-10">
           {/* Coming Soon Badge */}
           <div className="inline-flex items-center px-4 py-2 bg-gray-800/50 rounded-full border border-gray-700/50 mb-8">
-            <Zap className="w-4 h-4 text-yellow-400 mr-2" />
+            <Zap className="w-4 h-4 text-blue-400 mr-2" />
             <span className="text-sm text-gray-300 tracking-wider uppercase">Bientôt disponible</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-6xl md:text-8xl font-bold leading-none mb-8">
             <span className="block">Découvrez &</span>
-            <span className="block bg-gradient-to-r from-red-500 via-yellow-500 to-red-600 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-red-500 via-blue-500 to-blue-600 bg-clip-text text-transparent">
               Lancez
             </span>
             <span className="block text-5xl md:text-7xl text-gray-200 mt-4">
@@ -265,12 +277,12 @@ function App() {
                   className="relative text-center group"
                 >
                   {/* Step Number Circle */}
-                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-sm z-10">
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-red-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm z-10">
                     {step.step}
                   </div>
                   
                   <div className="bg-gray-800/30 border border-gray-700/30 rounded-2xl p-8 pt-12 hover:bg-gray-800/50 transition-all duration-300 group-hover:scale-105 h-full flex flex-col">
-                    <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-yellow-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
                       <step.icon className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-xl font-bold mb-4">{step.title}</h3>
@@ -284,7 +296,7 @@ function App() {
 
           {/* Daily Rankings Teaser */}
           <div className="mt-20 text-center">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600/20 to-yellow-600/20 border border-red-500/30 rounded-full mb-6">
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600/20 to-blue-600/20 border border-red-500/30 rounded-full mb-6">
               <TrendingUpIcon className="w-5 h-5 text-red-400 mr-2" />
               <span className="text-red-400 font-semibold">Classement quotidien</span>
             </div>
@@ -369,7 +381,7 @@ function App() {
                   animationDelay: `${index * 200}ms`
                 }}
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-yellow-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300">
+                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300">
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
@@ -399,9 +411,13 @@ function App() {
           </div>
           
           <div className="flex items-center justify-center gap-4 mb-8">
-            <Heart className="w-5 h-5 text-red-500" />
+            <svg viewBox="0 0 94 155" className="text-red-500 w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="m 71.616,112.159 c 0,16.098 -13.049,29.146 -29.146,29.146 -16.096,0 -29.147,-13.049 -29.147,-29.146 0,-16.097 13.051,-29.146 29.147,-29.146 16.097,0 29.146,13.049 29.146,29.146 z" />
+              <path d="m 92.847,51.875 c -0.368,-1.116 -1.177,-2.031 -2.235,-2.537 -7.32,-3.482 -13.54,-3.66 -18.482,-0.527 -0.176,0.112 -0.327,0.247 -0.498,0.364 V 25.893 c 0,-8.745 -6.587,-13.463 -12.783,-13.463 -1.315,0 -2.633,0.222 -3.896,0.632 v -2.02 C 54.952,4.746 49.895,0 43.189,0 37.878,0 33.722,2.858 32.166,7.171 31.02,6.793 29.802,6.586 28.54,6.586 c -5.926,0 -12.054,4.566 -12.054,12.206 V 32.994 C 15.269,32.531 13.991,32.247 12.685,32.205 9.527,32.103 6.319,33.394 3.887,35.75 1.418,38.14 0,41.411 0,44.724 v 67.435 c 0,23.418 19.053,42.47 42.47,42.47 23.419,0 42.471,-19.052 42.471,-42.47 l 1.538,-38.642 c 0.003,-5.625 4.394,-15.086 6.085,-18.273 0.548,-1.035 0.653,-2.254 0.283,-3.369 z m -14.974,21.473 -1.539,38.64 C 76.331,130.83 61.142,146.021 42.47,146.021 23.799,146.021 8.609,130.83 8.609,112.16 V 44.724 c 0,-0.993 0.461,-2.012 1.267,-2.789 0.755,-0.733 1.703,-1.153 2.533,-1.126 1.83,0.059 4.078,2.22 4.078,3.916 v 30.292 c 0,2.378 1.926,4.306 4.305,4.306 2.377,0 4.303,-1.928 4.303,-4.306 V 18.792 c 0,-2.639 2.063,-3.597 3.446,-3.597 0.537,0 1.304,0.131 1.899,0.754 0.689,0.719 1.054,1.963 1.054,3.596 v 52.082 c 0,2.378 1.929,4.306 4.306,4.306 2.377,0 4.303,-1.928 4.303,-4.306 V 11.043 c 0,-2.198 2.159,-2.435 3.088,-2.435 0.739,0 3.154,0.177 3.154,2.435 v 60.045 c 0,2.379 1.927,4.305 4.304,4.305 2.378,0 4.305,-1.926 4.305,-4.305 V 25.893 c 0,-4.504 2.981,-4.854 3.896,-4.854 1.926,0 4.175,1.271 4.175,4.854 v 54.235 c 0,2.378 1.927,4.304 4.305,4.304 2.378,0 4.304,-1.926 4.304,-4.304 V 69.902 c 0.006,-2.754 0.954,-11.203 5.117,-13.827 1.517,-0.956 3.571,-1.072 6.071,-0.447 -2.105,4.65 -4.949,11.968 -4.949,17.72 z" />
+            </svg>
             <span className="text-gray-400">Conçu avec amour pour l'écosystème entrepreneurial tunisien</span>
           </div>
+
           <div className="mb-4">
             <span className="text-sm text-gray-400 font-semibold">Made in Tunisia <span role="img" aria-label="Tunisian flag">🇹🇳</span></span>
           </div>
@@ -422,8 +438,59 @@ function App() {
             <span>•</span>
             <a href="#" className="hover:text-gray-300 transition-colors">Paramètres des cookies</a>
           </div>
+          <div className="text-xs text-gray-600 mt-4">
+            Khamsa icon licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">CC BY-SA 3.0</a>.
+          </div>
         </div>
       </footer>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300" onClick={() => setIsModalOpen(false)}>
+          <div className="bg-gray-900 border border-gray-700/50 rounded-2xl p-8 max-w-lg w-full relative shadow-2xl shadow-red-500/10" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div className="text-center">
+                <h3 className="text-2xl font-bold mb-2">Rejoindre la liste d'attente</h3>
+                <p className="text-gray-400 mb-6">Soyez le premier informé du lancement de TunisiaLaunch.</p>
+            </div>
+            {!isSubmitted ? (
+              <form 
+                name="waitlist" 
+                method="POST" 
+                data-netlify="true"
+                onSubmit={(e) => {
+                  handleSubmit(e);
+                  setTimeout(() => {
+                    setIsModalOpen(false);
+                  }, 2000);
+                }}
+                className="flex gap-3"
+              >
+                <input type="hidden" name="form-name" value="waitlist" />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="votre@email.com"
+                  className="flex-1 px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25 whitespace-nowrap"
+                >
+                  Rejoindre
+                </button>
+              </form>
+            ) : (
+              <div className="bg-green-600/20 border border-green-500/30 rounded-full px-6 py-3 text-green-400 flex items-center justify-center gap-2">
+                <CheckCircle className="w-5 h-5" />
+                Merci ! Vous êtes sur la liste.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
