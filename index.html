@@ -8,6 +8,13 @@
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Hidden form for Netlify to detect during build -->
+    <form name="waitlist" method="POST" data-netlify="true" style="display: none;">
+      <input type="hidden" name="form-name" value="waitlist" />
+      <input type="email" name="email" />
+    </form>
+    
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

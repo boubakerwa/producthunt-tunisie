@@ -33,9 +33,26 @@ function App() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
-    // Let Netlify handle the form submission
-    setIsSubmitted(true);
-    setEmail('');
+    e.preventDefault();
+    
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    // Submit to Netlify using AJAX
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(formData as any).toString()
+    })
+      .then(() => {
+        console.log("Form successfully submitted");
+        setIsSubmitted(true);
+        setEmail('');
+      })
+      .catch(error => {
+        console.error("Form submission error:", error);
+        alert("Erreur lors de l'envoi. Veuillez réessayer.");
+      });
   };
 
   return (
@@ -354,99 +371,7 @@ function App() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="relative z-10 px-6 py-32 border-t border-gray-800/50">
-        <div className="max-w-2xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Restons en contact
-            </h2>
-            <p className="text-gray-400">
-              Une question ? Une suggestion ? Nous aimerions avoir de vos nouvelles.
-            </p>
-          </div>
 
-          <form 
-            name="contact" 
-            method="POST" 
-            data-netlify="true"
-            className="space-y-6"
-          >
-            <input type="hidden" name="form-name" value="contact" />
-            
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Nom complet
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
-                  placeholder="Votre nom"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
-                  placeholder="votre@email.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-300 mb-2">
-                Vous êtes
-              </label>
-              <select
-                name="role"
-                id="role"
-                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
-              >
-                <option value="">Sélectionnez votre rôle</option>
-                <option value="entrepreneur">Entrepreneur</option>
-                <option value="developer">Développeur</option>
-                <option value="designer">Designer</option>
-                <option value="investor">Investisseur</option>
-                <option value="student">Étudiant</option>
-                <option value="other">Autre</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                Message
-              </label>
-              <textarea
-                name="message"
-                id="message"
-                rows={5}
-                required
-                className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all resize-none"
-                placeholder="Parlez-nous de votre projet ou posez votre question..."
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-lg font-semibold flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
-            >
-              <Mail className="w-5 h-5" />
-              Envoyer le message
-            </button>
-          </form>
-        </div>
-      </section>
 
       {/* Footer CTA */}
       <footer className="relative z-10 px-6 py-16 text-center border-t border-gray-800/50">
