@@ -557,9 +557,9 @@ function LandingPage() {
           <div className="mb-8">
             <p className="text-gray-400">
               Suivez-nous sur{' '}
-              <a href="#" className="text-red-400 hover:text-red-300 transition-colors" onClick={() => setIsModalOpen(true)}>Twitter</a>
+              <a href="https://x.com/wessyolo" className="text-red-400 hover:text-red-300 transition-colors">Twitter</a>
               {' '}et{' '}
-              <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center gap-1" onClick={() => setIsModalOpen(true)}>
+              <a href="https://www.linkedin.com/in/wbkr/" className="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center gap-1">
                 <Linkedin className="w-4 h-4" />
                 LinkedIn
               </a>
