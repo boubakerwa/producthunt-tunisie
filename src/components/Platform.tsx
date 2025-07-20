@@ -16,6 +16,7 @@ import {
   Bookmark,
   Clock as ClockIcon
 } from 'lucide-react';
+import ComingSoonModal from './ComingSoonModal';
 
 const CountdownTimer = ({ targetDate }: { targetDate: Date }) => {
   const calculateTimeLeft = () => {
@@ -191,6 +192,7 @@ const demoUser = {
 // Navigation Component
 const Navigation = () => {
   const location = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   return (
     <nav className="fixed top-0 left-0 right-0 z-20 glass-pane">
@@ -243,15 +245,15 @@ const Navigation = () => {
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
-            <button className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105">
+            <button className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105" onClick={() => setIsModalOpen(true)}>
               <Plus className="w-4 h-4" />
               <span>Soumettre un produit</span>
             </button>
-            <button className="p-2 text-gray-400 hover:text-white transition-colors">
+            <button className="p-2 text-gray-400 hover:text-white transition-colors" onClick={() => setIsModalOpen(true)}>
               <Bell className="w-5 h-5" />
             </button>
             <div className="relative group">
-              <button className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors">
+              <button className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors" onClick={() => setIsModalOpen(true)}>
                 <img 
                   src={demoUser.avatar} 
                   alt={demoUser.name}
@@ -262,16 +264,16 @@ const Navigation = () => {
               
               {/* Dropdown Menu */}
               <div className="absolute right-0 mt-2 w-48 glass-pane rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-                <Link to="/platform/profile" className="flex items-center px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                <Link to="/platform/profile" className="flex items-center px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors" onClick={() => setIsModalOpen(true)}>
                   <User className="w-4 h-4 mr-3" />
                   Profil
                 </Link>
-                <Link to="/platform/settings" className="flex items-center px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                <Link to="/platform/settings" className="flex items-center px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors" onClick={() => setIsModalOpen(true)}>
                   <Settings className="w-4 h-4 mr-3" />
                   Paramètres
                 </Link>
                 <div className="h-px bg-white/10 my-2"></div>
-                <button className="flex items-center w-full px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors">
+                <button className="flex items-center w-full px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 transition-colors" onClick={() => setIsModalOpen(true)}>
                   <LogOut className="w-4 h-4 mr-3" />
                   Déconnexion
                 </button>
@@ -280,6 +282,13 @@ const Navigation = () => {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <ComingSoonModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message="Fonctionnalité bientôt disponible !"
+        />
+      )}
     </nav>
   );
 };
@@ -328,15 +337,15 @@ const ProductCard = ({ product }: { product: typeof demoProducts[0] }) => {
 
       {/* Vote Button */}
       <div className="flex items-center justify-between">
-        <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105">
+        <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105" onClick={() => setIsModalOpen(true)}>
           <Heart className="w-4 h-4" />
           <span>{product.votes}</span>
         </button>
         <div className="flex items-center space-x-2">
-          <button className="p-2 text-gray-400 hover:text-white transition-colors">
+          <button className="p-2 text-gray-400 hover:text-white transition-colors" onClick={() => setIsModalOpen(true)}>
             <Share2 className="w-4 h-4" />
           </button>
-          <button className="p-2 text-gray-400 hover:text-white transition-colors">
+          <button className="p-2 text-gray-400 hover:text-white transition-colors" onClick={() => setIsModalOpen(true)}>
             <Bookmark className="w-4 h-4" />
           </button>
         </div>
@@ -348,6 +357,7 @@ const ProductCard = ({ product }: { product: typeof demoProducts[0] }) => {
 // Product Hunt-style Ranked Card Component
 const RankedProductCard = ({ product, rank }: { product: typeof demoProducts[0], rank: number }) => {
   const isTopProduct = rank === 1;
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   return (
     <div className={`glass-pane rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10 group border border-white/10 backdrop-blur-xl ${
@@ -529,6 +539,7 @@ const LastWeekRankings = () => {
 const RankedHomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('global');
   const rankedProducts = [...demoProducts].sort((a, b) => b.votes - a.votes);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   const categories = [
     { id: 'global', name: 'Global' },
@@ -638,11 +649,18 @@ const RankedHomePage = () => {
 
         {/* Load More */}
         <div className="text-center mt-12">
-          <button className="glass-pane px-8 py-4 rounded-full text-white hover:bg-white/10 transition-all duration-300 border border-white/10 backdrop-blur-xl">
+          <button className="glass-pane px-8 py-4 rounded-full text-white hover:bg-white/10 transition-all duration-300 border border-white/10 backdrop-blur-xl" onClick={() => setIsModalOpen(true)}>
             Voir tous les classements
           </button>
         </div>
       </div>
+      {isModalOpen && (
+        <ComingSoonModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message="Fonctionnalité bientôt disponible !"
+        />
+      )}
     </div>
   );
 };
@@ -650,6 +668,7 @@ const RankedHomePage = () => {
 // Grid Discover Page Component (Current View)
 const DiscoverPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const categories = [
     { id: 'all', name: 'Toutes les catégories' },
@@ -729,11 +748,18 @@ const DiscoverPage = () => {
 
         {/* Load More */}
         <div className="text-center mt-12">
-          <button className="glass-pane px-8 py-3 rounded-full text-white hover:bg-white/10 transition-all duration-300">
+          <button className="glass-pane px-8 py-3 rounded-full text-white hover:bg-white/10 transition-all duration-300" onClick={() => setIsModalOpen(true)}>
             Charger plus de produits
           </button>
         </div>
       </div>
+      {isModalOpen && (
+        <ComingSoonModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message="Fonctionnalité bientôt disponible !"
+        />
+      )}
     </div>
   );
 };

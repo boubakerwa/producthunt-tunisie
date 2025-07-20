@@ -36,6 +36,7 @@ import {
 } from 'lucide-react';
 import Platform from './components/Platform';
 import HackerHouse from './components/HackerHouse';
+import ComingSoonModal from './components/ComingSoonModal';
 
 function LandingPage() {
   const [email, setEmail] = useState('');
@@ -104,8 +105,8 @@ function LandingPage() {
             </span>
           </div>
           <div className="hidden md:flex items-center space-x-6">
-            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">À propos</a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300" onClick={() => setIsModalOpen(true)}>À propos</a>
+            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300" onClick={() => setIsModalOpen(true)}>Contact</a>
             <Link to="/hacker-house" className="text-gray-300 hover:text-white transition-colors duration-300">Hacker House</Link>
             <Link
               to="/platform"
@@ -556,9 +557,9 @@ function LandingPage() {
           <div className="mb-8">
             <p className="text-gray-400">
               Suivez-nous sur{' '}
-              <a href="#" className="text-red-400 hover:text-red-300 transition-colors">Twitter</a>
+              <a href="#" className="text-red-400 hover:text-red-300 transition-colors" onClick={() => setIsModalOpen(true)}>Twitter</a>
               {' '}et{' '}
-              <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center gap-1">
+              <a href="#" className="text-blue-400 hover:text-blue-300 transition-colors inline-flex items-center gap-1" onClick={() => setIsModalOpen(true)}>
                 <Linkedin className="w-4 h-4" />
                 LinkedIn
               </a>
@@ -588,64 +589,24 @@ function LandingPage() {
          </div>
 
           <div className="text-sm text-gray-500 space-x-6">
-            <a href="#" className="hover:text-gray-300 transition-colors">Politique de confidentialité</a>
+            <a href="#" className="hover:text-gray-300 transition-colors" onClick={() => setIsModalOpen(true)}>Politique de confidentialité</a>
             <span>•</span>
-            <a href="#" className="hover:text-gray-300 transition-colors">Conditions d'utilisation</a>
+            <a href="#" className="hover:text-gray-300 transition-colors" onClick={() => setIsModalOpen(true)}>Conditions d'utilisation</a>
             <span>•</span>
-            <a href="#" className="hover:text-gray-300 transition-colors">Paramètres des cookies</a>
+            <a href="#" className="hover:text-gray-300 transition-colors" onClick={() => setIsModalOpen(true)}>Paramètres des cookies</a>
           </div>
           <div className="text-xs text-gray-600 mt-4">
-            Khamsa icon licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">CC BY-SA 3.0</a>.
+            Khamsa icon licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors" onClick={() => setIsModalOpen(true)}>CC BY-SA 3.0</a>.
           </div>
         </div>
       </footer>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 transition-opacity duration-300" onClick={() => setIsModalOpen(false)}>
-          <div className="glass-pane rounded-2xl p-8 max-w-lg w-full relative" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <div className="text-center">
-                <h3 className="text-2xl font-bold mb-2">Rejoindre la liste d'attente</h3>
-                <p className="text-gray-400 mb-6">Soyez le premier informé du lancement de TunisiaLaunch.</p>
-            </div>
-            {!isSubmitted ? (
-              <form 
-                name="waitlist" 
-                method="POST" 
-                data-netlify="true"
-                onSubmit={(e) => {
-                  handleSubmit(e);
-                  setTimeout(() => {
-                    setIsModalOpen(false);
-                  }, 2000);
-                }}
-                className="flex gap-3"
-              >
-                <input type="hidden" name="form-name" value="waitlist" />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="votre@email.com"
-                  className="flex-1 px-6 py-3 bg-white/5 border border-white/20 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25 whitespace-nowrap"
-                >
-                  Rejoindre
-                </button>
-              </form>
-            ) : (
-              <div className="glass-pane rounded-full px-6 py-3 text-green-400 flex items-center justify-center gap-2">
-                <CheckCircle className="w-5 h-5" />
-                Merci ! Vous êtes sur la liste.
-              </div>
-            )}
-          </div>
-        </div>
+        <ComingSoonModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          message="Fonctionnalité bientôt disponible !"
+        />
       )}
     </div>
   );
