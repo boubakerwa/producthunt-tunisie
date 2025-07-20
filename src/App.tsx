@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import 'flag-icons/css/flag-icons.min.css';
 import { 
   TrendingUp as TrendingUpIcon, 
@@ -27,10 +28,15 @@ import {
   Linkedin,
   Calendar,
   Gift,
-  Hand
+  Hand,
+  Home,
+  Wifi,
+  Clock,
+  Play
 } from 'lucide-react';
+import Platform from './components/Platform';
 
-function App() {
+function LandingPage() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [githubStats, setGithubStats] = useState<{stars: number, forks: number} | null>(null);
@@ -42,6 +48,16 @@ function App() {
       .then(data => {
         setGithubStats({ stars: data.stargazers_count, forks: data.forks_count });
       });
+
+    const handleMouseMove = (e: MouseEvent) => {
+      document.documentElement.style.setProperty('--aurora-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--aurora-y', `${e.clientY}px`);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -68,19 +84,13 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, #ffffff 1px, transparent 1px), 
-                           radial-gradient(circle at 75% 75%, #ffffff 1px, transparent 1px)`,
-          backgroundSize: '100px 100px'
-        }}></div>
-      </div>
+    <div className="min-h-screen bg-black text-white">
+      {/* Background Aurora */}
+      <div className="aurora-background"></div>
       
       {/* Header */}
-      <header className="relative z-10 px-6 py-8">
-        <nav className="max-w-7xl mx-auto flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 z-20 glass-pane">
+        <nav className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-yellow-500 rounded-lg flex items-center justify-center relative">
               <Compass className="w-6 h-6 text-white" />
@@ -92,31 +102,25 @@ function App() {
               TunisiaLaunch
             </span>
           </div>
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-gray-300 hover:text-white transition-colors">À propos</a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors">Contact</a>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105"
+          <div className="hidden md:flex items-center space-x-6">
+            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">À propos</a>
+            <a href="#" className="text-gray-300 hover:text-white transition-colors duration-300">Contact</a>
+            <Link
+              to="/platform"
+              className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 px-6 py-2 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
             >
-              Rejoindre la liste d'attente
-            </button>
+              <Play className="w-4 h-4" />
+              Voir la plateforme
+            </Link>
           </div>
         </nav>
       </header>
 
       {/* Hero Section */}
-      <main className="relative z-10 px-6 pt-16 pb-32">
-        <div className="absolute inset-0 top-0 left-0 w-full h-full z-0 overflow-visible">
-            <svg viewBox="0 0 100 100" className="absolute -top-1/4 -left-1/4 w-[150%] h-[150%] opacity-[0.02] text-white" preserveAspectRatio="xMidYMid meet">
-                <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="40" fill="currentColor" style={{fontFamily: "'Marhey', cursive"}}>
-                    إبداع
-                </text>
-            </svg>
-        </div>
+      <main className="relative z-10 px-6 pt-32 pb-24">
         <div className="max-w-5xl mx-auto text-center relative z-10">
           {/* Coming Soon Badge */}
-          <div className="inline-flex items-center px-4 py-2 bg-gray-800/50 rounded-full border border-gray-700/50 mb-8">
+          <div className="inline-flex items-center px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-8">
             <Zap className="w-4 h-4 text-blue-400 mr-2" />
             <span className="text-sm text-gray-300 tracking-wider uppercase">Bientôt disponible</span>
           </div>
@@ -135,24 +139,42 @@ function App() {
             </span>
           </h1>
           <div className="flex justify-center mb-4">
-            <span className="fi fi-tn rounded-lg shadow" style={{ width: 40, height: 28, display: 'inline-block' }} />
+            <span className="fi fi-tn rounded-md shadow-lg" style={{ width: 40, height: 28, display: 'inline-block' }} />
           </div>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-gray-300 mb-16 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
             La première plateforme open source dédiée à l'écosystème entrepreneurial tunisien. 
             Découvrez, votez et soutenez les innovations qui façonnent l'avenir de la Tunisie.
           </p>
 
+          {/* Hacker Houses Preview */}
+          <div className="inline-flex items-center px-6 py-3 bg-white/5 border border-white/10 rounded-full mb-8">
+            <Home className="w-5 h-5 text-orange-400 mr-2" />
+            <span className="text-orange-400 font-semibold mr-2">Hacker Houses</span>
+            <span className="text-gray-400">• Résidences créatives tous les 6 mois</span>
+          </div>
+
           {/* Open Source Mission */}
-          <div className="inline-flex items-center px-6 py-3 bg-gray-800/30 border border-gray-700/30 rounded-full mb-12">
+          <div className="inline-flex items-center px-6 py-3 bg-white/5 border border-white/10 rounded-full mb-8">
             <Github className="w-5 h-5 text-green-400 mr-3" />
             <span className="text-green-400 font-semibold mr-2">100% Open Source</span>
             <span className="text-gray-400">• Construit par et pour la communauté tunisienne</span>
           </div>
 
+          {/* Platform Preview Button */}
+          <div className="mb-8">
+            <Link
+              to="/platform"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
+            >
+              <Play className="w-5 h-5 mr-2" />
+              Explorer la plateforme
+            </Link>
+          </div>
+
           {/* Waitlist Email Signup - Netlify Form */}
-          <div className="max-w-lg mx-auto mb-12">
+          <div className="max-w-lg mx-auto mb-8">
             {!isSubmitted ? (
               <form 
                 name="waitlist" 
@@ -168,7 +190,7 @@ function App() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="votre@email.com"
-                  className="flex-1 px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                  className="flex-1 px-6 py-3 bg-white/5 border border-white/20 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all"
                   required
                 />
                 <button
@@ -179,7 +201,7 @@ function App() {
                 </button>
               </form>
             ) : (
-              <div className="bg-green-600/20 border border-green-500/30 rounded-full px-6 py-3 text-green-400 flex items-center justify-center gap-2">
+              <div className="glass-pane rounded-full px-6 py-3 text-green-400 flex items-center justify-center gap-2">
                 <CheckCircle className="w-5 h-5" />
                 Vous êtes sur la liste d'attente ! Nous vous préviendrons lors du lancement.
               </div>
@@ -187,7 +209,7 @@ function App() {
           </div>
 
           {/* Social Proof */}
-          <div className="flex items-center justify-center gap-2 text-gray-400 mb-16">
+          <div className="flex items-center justify-center gap-2 text-gray-400 mb-8">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             <span className="text-lg">
               <span className="text-white font-semibold">247</span> entrepreneurs tunisiens en attente
@@ -197,7 +219,7 @@ function App() {
       </main>
 
       {/* Product Hunt Features Section */}
-      <section className="relative z-10 px-6 py-32">
+      <section className="relative z-10 px-6 py-24">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
@@ -213,8 +235,8 @@ function App() {
             {/* Process Connection Lines */}
             <div className="hidden md:block absolute top-24 left-1/2 transform -translate-x-1/2 w-full max-w-3xl">
               <div className="flex justify-between items-center">
-                <div className="w-1/3 h-0.5 bg-gradient-to-r from-transparent via-red-500/30 to-red-500/50"></div>
-                <div className="w-1/3 h-0.5 bg-gradient-to-r from-red-500/50 via-red-500/30 to-transparent"></div>
+                <div className="w-1/3 h-px bg-gradient-to-r from-transparent via-red-500/50 to-red-500/70"></div>
+                <div className="w-1/3 h-px bg-gradient-to-r from-red-500/70 via-red-500/50 to-transparent"></div>
               </div>
             </div>
             
@@ -277,12 +299,12 @@ function App() {
                   className="relative text-center group"
                 >
                   {/* Step Number Circle */}
-                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-red-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm z-10">
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-red-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm z-10 shadow-lg">
                     {step.step}
                   </div>
                   
-                  <div className="bg-gray-800/30 border border-gray-700/30 rounded-2xl p-8 pt-12 hover:bg-gray-800/50 transition-all duration-300 group-hover:scale-105 h-full flex flex-col">
-                    <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <div className="glass-pane rounded-2xl p-8 pt-12 transition-all duration-300 group-hover:scale-105 group-hover:bg-white/10 h-full flex flex-col">
+                    <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
                       <step.icon className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-xl font-bold mb-4">{step.title}</h3>
@@ -296,7 +318,7 @@ function App() {
 
           {/* Daily Rankings Teaser */}
           <div className="mt-20 text-center">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-600/20 to-blue-600/20 border border-red-500/30 rounded-full mb-6">
+            <div className="inline-flex items-center px-6 py-3 glass-pane rounded-full mb-6">
               <TrendingUpIcon className="w-5 h-5 text-red-400 mr-2" />
               <span className="text-red-400 font-semibold">Classement quotidien</span>
             </div>
@@ -311,44 +333,155 @@ function App() {
         </div>
       </section>
 
-      {/* Tunisian Community Features */}
-      <section className="relative z-10 px-6 py-20 border-t border-gray-800/50">
-        <div className="max-w-4xl mx-auto">
+      {/* Hacker Houses Section */}
+      <section className="relative z-10 px-6 py-24 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Plus qu'une plateforme, une communauté à la Tunisienne
+            <div className="inline-flex items-center px-6 py-3 glass-pane rounded-full mb-6">
+              <Home className="w-5 h-5 text-orange-400 mr-2" />
+              <span className="text-orange-400 font-semibold">Hacker Houses</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Résidences créatives tous les 6 mois
             </h2>
-            <p className="text-xl text-gray-400">
-              Événements, prix communautaires et soutien à l'écosystème entrepreneurial tunisien
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Rejoignez nos hacker houses exclusives pour coder, collaborer et innover avec la communauté tech tunisienne
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-gray-800/30 border border-gray-700/30 rounded-xl p-6 hover:bg-gray-800/50 transition-all duration-300 hover:scale-105">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-4">
-                <Calendar className="w-6 h-6 text-white" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {[
+              {
+                icon: Home,
+                title: 'Espaces dédiés',
+                description: 'Maisons entièrement équipées dans les plus belles régions de Tunisie'
+              },
+              {
+                icon: Wifi,
+                title: 'Connexion haut débit',
+                description: 'Internet ultra-rapide et infrastructure tech pour coder sans limites'
+              },
+              {
+                icon: Users,
+                title: 'Communauté',
+                description: 'Rencontrez et collaborez avec les meilleurs entrepreneurs tunisiens'
+              },
+              {
+                icon: Clock,
+                title: '6 mois',
+                description: 'Résidences de 2 semaines tous les 6 mois pour maintenir l\'élan'
+              }
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="glass-pane rounded-xl p-6 text-center transition-all duration-300 hover:scale-105 hover:bg-white/10 group"
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300">
+                  <feature.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{feature.description}</p>
               </div>
-              <h3 className="text-xl font-bold mb-3">Événements mensuels</h3>
-              <p className="text-gray-400 leading-relaxed">
-                Meetups, pitch sessions et ateliers pour connecter les entrepreneurs tunisiens et célébrer l'innovation locale.
-              </p>
+            ))}
+          </div>
+
+          <div className="glass-pane rounded-2xl p-8 text-center">
+            <h3 className="text-2xl font-bold mb-4">Prochaine Hacker House</h3>
+            <p className="text-gray-300 mb-6">
+              <span className="text-orange-400 font-semibold">Printemps 2024</span> • Sidi Bou Said, Tunis
+            </p>
+            <div className="flex items-center justify-center gap-4 text-sm text-gray-400">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span>2 semaines intensives</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                <span>20 entrepreneurs max</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tunisian Community Features */}
+      <section className="relative z-10 px-6 py-24 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Plus qu'une plateforme, une communauté
+            </h2>
+            <p className="text-xl text-gray-400">
+              Événements, prix et soutien à l'écosystème entrepreneurial tunisien
+            </p>
+          </div>
+
+          <div className="space-y-12">
+            {/* Événements mensuels - Large featured card */}
+            <div className="glass-pane rounded-2xl p-8 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-10 h-10 text-white" />
+                </div>
+                <div className="text-center md:text-left flex-1">
+                  <h3 className="text-2xl font-bold mb-4">Événements mensuels</h3>
+                  <p className="text-gray-400 leading-relaxed text-lg mb-6">
+                    Meetups, pitch sessions et ateliers pour connecter et célébrer l'innovation locale.
+                  </p>
+                  <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                    <span className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-sm text-purple-300">Networking</span>
+                    <span className="px-4 py-2 bg-pink-500/20 border border-pink-500/30 rounded-full text-sm text-pink-300">Pitch Sessions</span>
+                    <span className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-sm text-purple-300">Ateliers</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="bg-gray-800/30 border border-gray-700/30 rounded-xl p-6 hover:bg-gray-800/50 transition-all duration-300 hover:scale-105">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center mb-4">
-                <Gift className="w-6 h-6 text-white" />
+            {/* Prix communautaires - Split layout */}
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="md:col-span-2 glass-pane rounded-2xl p-8 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10">
+                <div className="flex items-start gap-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Gift className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold mb-3">Prix communautaires</h3>
+                    <p className="text-gray-400 leading-relaxed mb-4">
+                      Récompenses crowdsourcées pour les produits les plus innovants, financées par la communauté.
+                    </p>
+                    <div className="flex items-center gap-4 text-sm">
+                      <div className="flex items-center gap-2 text-green-400">
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        <span>Financement communautaire</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-teal-400">
+                        <div className="w-2 h-2 bg-teal-400 rounded-full"></div>
+                        <span>Vote démocratique</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-3">Prix communautaires</h3>
-              <p className="text-gray-400 leading-relaxed">
-                Récompenses crowdsourcées pour les produits les plus innovants, financées par la communauté tunisienne.
-              </p>
+              
+              {/* Side panel with stats */}
+              <div className="glass-pane rounded-2xl p-6 flex flex-col justify-center">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-green-400 mb-2">50K+</div>
+                  <div className="text-sm text-gray-400">DT de prix distribués</div>
+                </div>
+                <div className="h-px bg-white/10 my-6"></div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-teal-400 mb-2">12</div>
+                  <div className="text-sm text-gray-400">Projets récompensés</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Simplified Features Section with Animation */}
-      <section className="relative z-10 px-6 py-20 border-t border-gray-800/50">
+      <section className="relative z-10 px-6 py-24 border-t border-white/10">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -376,7 +509,7 @@ function App() {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="bg-gray-800/30 border border-gray-700/30 rounded-xl p-6 text-center hover:bg-gray-800/50 transition-all duration-500 hover:scale-105 group"
+                className="glass-pane rounded-xl p-6 text-center transition-all duration-500 hover:scale-105 hover:bg-white/10 group"
                 style={{
                   animationDelay: `${index * 200}ms`
                 }}
@@ -392,10 +525,8 @@ function App() {
         </div>
       </section>
 
-
-
       {/* Footer CTA */}
-      <footer className="relative z-10 px-6 py-16 text-center border-t border-gray-800/50">
+      <footer className="relative z-10 px-6 py-16 text-center border-t border-white/10">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <p className="text-gray-400">
@@ -445,8 +576,8 @@ function App() {
       </footer>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300" onClick={() => setIsModalOpen(false)}>
-          <div className="bg-gray-900 border border-gray-700/50 rounded-2xl p-8 max-w-lg w-full relative shadow-2xl shadow-red-500/10" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 transition-opacity duration-300" onClick={() => setIsModalOpen(false)}>
+          <div className="glass-pane rounded-2xl p-8 max-w-lg w-full relative" onClick={(e) => e.stopPropagation()}>
             <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
@@ -472,7 +603,7 @@ function App() {
                   type="email"
                   name="email"
                   placeholder="votre@email.com"
-                  className="flex-1 px-6 py-3 bg-gray-800/50 border border-gray-700/50 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
+                  className="flex-1 px-6 py-3 bg-white/5 border border-white/20 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all"
                   required
                 />
                 <button
@@ -483,7 +614,7 @@ function App() {
                 </button>
               </form>
             ) : (
-              <div className="bg-green-600/20 border border-green-500/30 rounded-full px-6 py-3 text-green-400 flex items-center justify-center gap-2">
+              <div className="glass-pane rounded-full px-6 py-3 text-green-400 flex items-center justify-center gap-2">
                 <CheckCircle className="w-5 h-5" />
                 Merci ! Vous êtes sur la liste.
               </div>
@@ -492,6 +623,17 @@ function App() {
         </div>
       )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/platform/*" element={<Platform />} />
+      </Routes>
+    </Router>
   );
 }
 

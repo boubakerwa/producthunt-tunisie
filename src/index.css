@@ -1,3 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  --aurora-x: 50%;
+  --aurora-y: 50%;
+}
+
+body {
+  margin: 0;
+  background-color: #000;
+}
+
+.aurora-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  background:
+    radial-gradient(40vw 40vw at var(--aurora-x) var(--aurora-y),
+    rgba(239, 68, 68, 0.15),
+    transparent 80%),
+    radial-gradient(30vw 30vw at 20% 70%,
+    rgba(59, 130, 246, 0.15),
+    transparent 80%),
+    radial-gradient(25vw 25vw at 80% 30%,
+    rgba(234, 179, 8, 0.15),
+    transparent 80%);
+  animation: aurora-pulse 15s infinite alternate;
+}
+
+@keyframes aurora-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+.glass-pane {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/20;
+}
