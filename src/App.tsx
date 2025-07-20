@@ -162,16 +162,7 @@ function LandingPage() {
             <span className="text-gray-400">• Construit par et pour la communauté tunisienne</span>
           </div>
 
-          {/* Platform Preview Button */}
-          <div className="mb-8">
-            <Link
-              to="/platform"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
-            >
-              <Play className="w-5 h-5 mr-2" />
-              Explorer la plateforme
-            </Link>
-          </div>
+          
 
           {/* Waitlist Email Signup - Netlify Form */}
           <div className="max-w-lg mx-auto mb-8">
@@ -333,6 +324,228 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* The Challenge Section */}
+      <section className="relative z-10 px-6 py-24 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Le Défi de l'Écosystème Tunisien
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Les entrepreneurs tunisiens sont talentueux et ambitieux, mais font face à des défis uniques.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="glass-pane rounded-xl p-6 text-center">
+              <h3 className="text-lg font-bold mb-2">Manque de Visibilité</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Difficile de se faire connaître localement et à l'international.</p>
+            </div>
+            <div className="glass-pane rounded-xl p-6 text-center">
+              <h3 className="text-lg font-bold mb-2">Accès aux Ressources</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">L'accès au financement et au mentorat est un parcours du combattant.</p>
+            </div>
+            <div className="glass-pane rounded-xl p-6 text-center">
+              <h3 className="text-lg font-bold mb-2">Défis Régionaux</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Les complexités du marché local peuvent freiner la croissance.</p>
+            </div>
+            <div className="glass-pane rounded-xl p-6 text-center">
+              <h3 className="text-lg font-bold mb-2">Fuite des Cerveaux</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">Les meilleurs talents sont souvent attirés par des opportunités à l'étranger.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="relative z-10 px-6 py-24">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Une Plateforme, Deux Audiences
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Que vous soyez un créateur ou un membre de la communauté, TunisiaLaunch est fait pour vous.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="glass-pane rounded-2xl p-8">
+              <h3 className="text-2xl font-bold mb-4">Pour les Créateurs</h3>
+              <ul className="space-y-4 text-gray-300">
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-1" />
+                  <span><b>Visibilité Instantanée :</b> Touchez des milliers d'utilisateurs, investisseurs et journalistes tunisiens.</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-1" />
+                  <span><b>Feedback Authentique :</b> Recevez des retours constructifs de la part d'une communauté passionnée.</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-green-400 mr-3 mt-1" />
+                  <span><b>Accès à l'Écosystème :</b> Connectez-vous avec des mentors, des investisseurs et des partenaires potentiels.</span>
+                </li>
+              </ul>
+            </div>
+            <div className="glass-pane rounded-2xl p-8">
+              <h3 className="text-2xl font-bold mb-4">Pour la Communauté</h3>
+              <ul className="space-y-4 text-gray-300">
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-blue-400 mr-3 mt-1" />
+                  <span><b>Découvrez l'Innovation :</b> Soyez le premier à découvrir les produits qui façonnent l'avenir de la Tunisie.</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-blue-400 mr-3 mt-1" />
+                  <span><b>Soutenez les Talents Locaux :</b> Votre vote et votre feedback peuvent aider un projet à décoller.</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="w-5 h-5 text-blue-400 mr-3 mt-1" />
+                  <span><b>Influencez l'Avenir :</b> Participez à l'émergence des prochains grands succès tunisiens.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Roadmap Section */}
+      <section className="relative z-10 px-6 py-24 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Notre Feuille de Route
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Nous construisons TunisiaLaunch pas à pas, avec la communauté.
+            </p>
+          </div>
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-white/10"></div>
+
+            <div className="space-y-16">
+              <div className="flex items-center justify-center relative">
+                <div className="w-1/2 pr-8 text-right">
+                  <h3 className="text-2xl font-bold text-green-400 mb-2">Phase 1: Lancement de la Plateforme</h3>
+                  <p className="text-gray-400">Lancement de la plateforme de découverte de produits, avec un focus sur le vote et le feedback.</p>
+                </div>
+                <div className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center z-10">
+                  <CheckCircle className="w-6 h-6 text-black" />
+                </div>
+                <div className="w-1/2 pl-8">
+                  <p className="text-gray-500">Q4 2025</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center relative">
+                <div className="w-1/2 pr-8 text-right">
+                  <p className="text-gray-500">Q1 2026</p>
+                </div>
+                <div className="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center z-10">
+                  <Users className="w-6 h-6 text-black" />
+                </div>
+                <div className="w-1/2 pl-8">
+                  <h3 className="text-2xl font-bold text-blue-400 mb-2">Phase 2: Croissance de la Communauté</h3>
+                  <p className="text-gray-400">Organisation d'événements en ligne et hors ligne pour renforcer la communauté.</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-center relative">
+                <div className="w-1/2 pr-8 text-right">
+                  <h3 className="text-2xl font-bold text-orange-400 mb-2">Phase 3: Hacker Houses</h3>
+                  <p className="text-gray-400">Lancement de la première Hacker House pour accélérer les projets les plus prometteurs.</p>
+                </div>
+                <div className="w-12 h-12 bg-orange-400 rounded-full flex items-center justify-center z-10">
+                  <Home className="w-6 h-6 text-black" />
+                </div>
+                <div className="w-1/2 pl-8">
+                  <p className="text-gray-500">Q2 2026</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="relative z-10 px-6 py-24 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Par et Pour les Entrepreneurs Tunisiens
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Notre mission est de catalyser l'innovation en Tunisie. Voici ce que les fondateurs en pensent.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="glass-pane rounded-2xl p-8">
+              <p className="text-lg text-gray-300 mb-6">"TunisiaLaunch est la plateforme que nous attendions tous. Elle nous donne la visibilité et le soutien dont nous avons besoin pour réussir ici, en Tunisie."</p>
+              <div className="flex items-center">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Founder" className="w-12 h-12 rounded-full mr-4"/>
+                <div>
+                  <p className="font-bold text-white">Karim Bettaieb</p>
+                  <p className="text-gray-400">Fondateur de "ForsaTN"</p>
+                </div>
+              </div>
+            </div>
+            <div className="glass-pane rounded-2xl p-8">
+              <p className="text-lg text-gray-300 mb-6">"Grâce à TunisiaLaunch, nous avons pu tester notre idée, recevoir des feedbacks précieux et nous connecter avec notre première communauté d'utilisateurs."</p>
+              <div className="flex items-center">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Founder" className="w-12 h-12 rounded-full mr-4"/>
+                <div>
+                  <p className="font-bold text-white">Myriam Bouaziz</p>
+                  <p className="text-gray-400">Fondatrice de "Ahkili"</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Simplified Features Section with Animation */}
+      <section className="relative z-10 px-6 py-24 border-t border-white/10">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Prêt à présenter l'innovation tunisienne ?
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                icon: TrendingUpIcon,
+                title: 'Lancer des produits',
+                description: 'Présentez vos innovations à la communauté tech tunisienne.'
+              },
+              {
+                icon: Users,
+                title: 'Connecter',
+                description: 'Réseautez avec des entrepreneurs et innovateurs.'
+              },
+              {
+                icon: Star,
+                title: 'Découvrir',
+                description: 'Trouvez les meilleurs produits émergents quotidiennement.'
+              }
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="glass-pane rounded-xl p-6 text-center transition-all duration-500 hover:scale-105 hover:bg-white/10 group"
+                style={{
+                  animationDelay: `${index * 200}ms`
+                }}
+              >
+                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:rotate-12 transition-transform duration-300">
+                  <feature.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Hacker Houses Section */}
       <section className="relative z-10 px-6 py-24 border-t border-white/10">
         <div className="max-w-6xl mx-auto">
@@ -342,10 +555,10 @@ function LandingPage() {
               <span className="text-orange-400 font-semibold">Hacker Houses</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Résidences créatives tous les 6 mois
+              Accelérateur de Startups en Résidence
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Rejoignez nos hacker houses exclusives pour coder, collaborer et innover avec la communauté tech tunisienne
+              Nos Hacker Houses sont des programmes d'accélération immersifs de deux semaines pour les projets les plus prometteurs de la plateforme. Postulez pour transformer votre idée en réalité.
             </p>
           </div>
 
@@ -398,82 +611,6 @@ function LandingPage() {
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4" />
                 <span>20 entrepreneurs max</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Tunisian Community Features */}
-      <section className="relative z-10 px-6 py-24 border-t border-white/10">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Plus qu'une plateforme, une communauté
-            </h2>
-            <p className="text-xl text-gray-400">
-              Événements, prix et soutien à l'écosystème entrepreneurial tunisien
-            </p>
-          </div>
-
-          <div className="space-y-12">
-            {/* Événements mensuels - Large featured card */}
-            <div className="glass-pane rounded-2xl p-8 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10">
-              <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-10 h-10 text-white" />
-                </div>
-                <div className="text-center md:text-left flex-1">
-                  <h3 className="text-2xl font-bold mb-4">Événements mensuels</h3>
-                  <p className="text-gray-400 leading-relaxed text-lg mb-6">
-                    Meetups, pitch sessions et ateliers pour connecter et célébrer l'innovation locale.
-                  </p>
-                  <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                    <span className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-sm text-purple-300">Networking</span>
-                    <span className="px-4 py-2 bg-pink-500/20 border border-pink-500/30 rounded-full text-sm text-pink-300">Pitch Sessions</span>
-                    <span className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-sm text-purple-300">Ateliers</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Prix communautaires - Split layout */}
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="md:col-span-2 glass-pane rounded-2xl p-8 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10">
-                <div className="flex items-start gap-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Gift className="w-8 h-8 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-3">Prix communautaires</h3>
-                    <p className="text-gray-400 leading-relaxed mb-4">
-                      Récompenses crowdsourcées pour les produits les plus innovants, financées par la communauté.
-                    </p>
-                    <div className="flex items-center gap-4 text-sm">
-                      <div className="flex items-center gap-2 text-green-400">
-                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                        <span>Financement communautaire</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-teal-400">
-                        <div className="w-2 h-2 bg-teal-400 rounded-full"></div>
-                        <span>Vote démocratique</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Side panel with stats */}
-              <div className="glass-pane rounded-2xl p-6 flex flex-col justify-center">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-green-400 mb-2">50K+</div>
-                  <div className="text-sm text-gray-400">DT de prix distribués</div>
-                </div>
-                <div className="h-px bg-white/10 my-6"></div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-teal-400 mb-2">12</div>
-                  <div className="text-sm text-gray-400">Projets récompensés</div>
-                </div>
               </div>
             </div>
           </div>

@@ -51,5 +51,6 @@ body {
 }
 
 .glass-pane {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/20;
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg shadow-black/20 transition-all duration-300;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 4px 6px rgba(0, 0, 0, 0.1);
 }
