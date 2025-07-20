@@ -13,8 +13,64 @@ import {
   MessageCircle,
   Share2,
   Eye,
-  Bookmark
+  Bookmark,
+  Clock as ClockIcon
 } from 'lucide-react';
+
+const CountdownTimer = ({ targetDate }: { targetDate: Date }) => {
+  const calculateTimeLeft = () => {
+    const difference = +targetDate - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    }
+
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  });
+
+  const timerComponents: JSX.Element[] = [];
+
+  Object.keys(timeLeft).forEach((interval) => {
+    if (!timeLeft[interval as keyof typeof timeLeft]) {
+      return;
+    }
+
+    timerComponents.push(
+      <span key={interval} className="text-white font-semibold text-lg md:text-xl">
+        {timeLeft[interval as keyof typeof timeLeft]} {
+          interval === 'days' ? 'jours' :
+          interval === 'hours' ? 'heures' :
+          interval === 'minutes' ? 'minutes' :
+          'secondes'
+        }{" "}
+      </span>
+    );
+  });
+
+  return (
+    <div className="flex items-center justify-center space-x-2">
+      <ClockIcon className="w-5 h-5 text-red-400" />
+      {timerComponents.length ? timerComponents : <span className="text-white font-semibold text-lg md:text-xl">Temps écoulé!</span>}
+    </div>
+  );
+};
+
 
 // Enhanced demo data with more realistic weekly voting
 const demoProducts = [
@@ -498,12 +554,13 @@ const RankedHomePage = () => {
             Top produits tunisiens
           </h1>
           <p className="text-gray-300 text-lg">
-            Votez cette semaine • Semaine 3 • Clôture le dimanche 23h59
+            Votez cette semaine • Semaine 3
           </p>
+          <CountdownTimer targetDate={new Date('2025-07-27T23:59:59')} />
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10">
+        <div className="sticky top-0 z-10 bg-black py-4 flex flex-wrap justify-center gap-3 mb-10">
           {categories.map(category => (
             <button
               key={category.id}
@@ -555,21 +612,21 @@ const RankedHomePage = () => {
             <div className="glass-pane rounded-2xl p-6 border border-white/10 backdrop-blur-xl">
               <h3 className="text-lg font-bold text-white mb-6">Statistiques de la semaine</h3>
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-gray-400">Votes totaux</span>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                  <span className="text-blue-300">Votes totaux</span>
                   <span className="text-white font-semibold">1,247</span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-gray-400">Nouveaux produits</span>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                  <span className="text-purple-300">Nouveaux produits</span>
                   <span className="text-white font-semibold">12</span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-gray-400">Visiteurs uniques</span>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-teal-500/10 border border-teal-500/20">
+                  <span className="text-teal-300">Visiteurs uniques</span>
                   <span className="text-white font-semibold">8.9K</span>
                 </div>
-                <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-gray-400">Croissance moyenne</span>
-                  <span className="text-green-400 font-semibold">+15%</span>
+                <div className="flex justify-between items-center p-3 rounded-xl bg-green-500/10 border border-green-500/20">
+                  <span className="text-green-300">Croissance moyenne</span>
+                  <span className="text-white font-semibold">+15%</span>
                 </div>
               </div>
             </div>
@@ -592,6 +649,22 @@ const RankedHomePage = () => {
 
 // Grid Discover Page Component (Current View)
 const DiscoverPage = () => {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const categories = [
+    { id: 'all', name: 'Toutes les catégories' },
+    { id: 'Tech', name: 'Tech' },
+    { id: 'Santé', name: 'Santé' },
+    { id: 'Environnement', name: 'Environnement' },
+    { id: 'Éducation', name: 'Éducation' },
+    { id: 'Finance', name: 'Finance' },
+    { id: 'E-commerce', name: 'E-commerce' }
+  ];
+
+  const filteredProducts = demoProducts
+    .filter(product => selectedCategory === 'all' || product.category === selectedCategory)
+    .sort((a, b) => b.votes - a.votes); // Default sort by votes
+
   return (
     <div className="pt-24 px-6 pb-12">
       <div className="max-w-7xl mx-auto">
@@ -612,7 +685,7 @@ const DiscoverPage = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           <div className="glass-pane rounded-xl p-6 text-center">
             <div className="text-3xl font-bold text-red-400 mb-2">1,247</div>
-            <div className="text-sm text-gray-400">Produits lancés</div>
+            <div className="text-sm text-gray-400">Produits à découvrir</div>
           </div>
           <div className="glass-pane rounded-xl p-6 text-center">
             <div className="text-3xl font-bold text-blue-400 mb-2">89.2K</div>
@@ -628,9 +701,28 @@ const DiscoverPage = () => {
           </div>
         </div>
 
+        {/* Filters and Sort */}
+        <div className="flex flex-col md:flex-row justify-center gap-4 mb-8">
+          <div className="flex flex-wrap justify-center gap-3">
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-sm border ${
+                  selectedCategory === cat.id
+                    ? 'bg-white/30 text-white border-white/50 shadow-xl ring-2 ring-white/40 backdrop-blur-3xl'
+                    : 'text-gray-400 hover:text-white hover:bg-white/10 border-white/10'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {demoProducts.map(product => (
+          {filteredProducts.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
