@@ -12,9 +12,9 @@ const HackerHouse = () => {
               <Home className="w-5 h-5 text-orange-400 mr-2" />
               <span className="text-orange-400 font-semibold">Hacker Houses</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              Accelérateur de Startups en Résidence
-            </h1>
+                      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
+            Accelérateur de Startups en Résidence
+          </h1>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               Nos Hacker Houses sont des programmes d'accélération immersifs de deux semaines pour les projets les plus prometteurs de la plateforme. Postulez pour transformer votre idée en réalité.
             </p>

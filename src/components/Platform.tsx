@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { 
-  Home, 
   TrendingUp, 
   Plus, 
   Search, 
@@ -222,6 +221,18 @@ const Navigation = () => {
               />
             </div>
           </div>
+          
+          {/* Mobile Search */}
+          <div className="md:hidden flex-1 max-w-md mx-4">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Rechercher..."
+                className="w-full pl-10 pr-4 py-2 glass-pane rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all text-sm"
+              />
+            </div>
+          </div>
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-6">
@@ -242,12 +253,37 @@ const Navigation = () => {
               Découvrir
             </Link>
           </div>
+          
+          {/* Mobile Navigation Links */}
+          <div className="md:hidden flex items-center space-x-3">
+            <Link 
+              to="/platform" 
+              className={`text-gray-300 hover:text-white transition-colors duration-300 px-2 py-1 rounded-lg hover:bg-white/5 text-sm ${
+                location.pathname === '/platform' ? 'text-white bg-white/10' : ''
+              }`}
+            >
+              Accueil
+            </Link>
+            <Link 
+              to="/platform/trending" 
+              className={`text-gray-300 hover:text-white transition-colors duration-300 px-2 py-1 rounded-lg hover:bg-white/5 text-sm ${
+                location.pathname === '/platform/trending' ? 'text-white bg-white/10' : ''
+              }`}
+            >
+              Découvrir
+            </Link>
+          </div>
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
             <button className="hidden md:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105" onClick={() => setIsModalOpen(true)}>
               <Plus className="w-4 h-4" />
               <span>Soumettre un produit</span>
+            </button>
+            
+            {/* Mobile Submit Button */}
+            <button className="md:hidden p-2 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-full text-white transition-all duration-300" onClick={() => setIsModalOpen(true)}>
+              <Plus className="w-4 h-4" />
             </button>
             <button className="p-2 text-gray-400 hover:text-white transition-colors" onClick={() => setIsModalOpen(true)}>
               <Bell className="w-5 h-5" />
@@ -337,15 +373,15 @@ const ProductCard = ({ product }: { product: typeof demoProducts[0] }) => {
 
       {/* Vote Button */}
       <div className="flex items-center justify-between">
-        <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105" onClick={() => setIsModalOpen(true)}>
+        <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-full text-sm font-semibold transition-all duration-300 transform hover:scale-105">
           <Heart className="w-4 h-4" />
           <span>{product.votes}</span>
         </button>
         <div className="flex items-center space-x-2">
-          <button className="p-2 text-gray-400 hover:text-white transition-colors" onClick={() => setIsModalOpen(true)}>
+          <button className="p-2 text-gray-400 hover:text-white transition-colors">
             <Share2 className="w-4 h-4" />
           </button>
-          <button className="p-2 text-gray-400 hover:text-white transition-colors" onClick={() => setIsModalOpen(true)}>
+          <button className="p-2 text-gray-400 hover:text-white transition-colors">
             <Bookmark className="w-4 h-4" />
           </button>
         </div>
@@ -357,7 +393,6 @@ const ProductCard = ({ product }: { product: typeof demoProducts[0] }) => {
 // Product Hunt-style Ranked Card Component
 const RankedProductCard = ({ product, rank }: { product: typeof demoProducts[0], rank: number }) => {
   const isTopProduct = rank === 1;
-  const [isModalOpen, setIsModalOpen] = useState(false);
   
   return (
     <div className={`glass-pane rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] hover:bg-white/10 group border border-white/10 backdrop-blur-xl ${
@@ -561,7 +596,7 @@ const RankedHomePage = () => {
             <TrendingUp className="w-5 h-5 text-red-400 mr-3" />
             <span className="text-red-400 font-semibold">Classement hebdomadaire</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-3">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
             Top produits tunisiens
           </h1>
           <p className="text-gray-300 text-lg">
@@ -571,17 +606,17 @@ const RankedHomePage = () => {
         </div>
 
         {/* Category Tabs */}
-        <div className="sticky top-0 z-10 bg-black py-4 flex flex-wrap justify-center gap-3 mb-10">
+        <div className="sticky top-0 z-10 bg-black py-4 flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 px-4">
           {categories.map(category => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-sm border ${
-                selectedCategory === category.id
-                  ? 'bg-white/20 text-white border-white/30 shadow-lg'
-                  : 'text-gray-400 hover:text-white hover:bg-white/10 border-white/10'
-              }`}
-            >
+                          <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-sm border ${
+                  selectedCategory === category.id
+                    ? 'bg-white/20 text-white border-white/30 shadow-lg'
+                    : 'text-gray-400 hover:text-white hover:bg-white/10 border-white/10'
+                }`}
+              >
               {category.name}
             </button>
           ))}
@@ -689,9 +724,9 @@ const DiscoverPage = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             Découvrez les meilleurs produits
-            <span className="block text-3xl md:text-4xl text-gray-300 mt-2">
+            <span className="block text-2xl sm:text-3xl md:text-4xl text-gray-300 mt-2">
               de l'écosystème tunisien
             </span>
           </h1>
@@ -722,12 +757,12 @@ const DiscoverPage = () => {
 
         {/* Filters and Sort */}
         <div className="flex flex-col md:flex-row justify-center gap-4 mb-8">
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 px-4">
             {categories.map(cat => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-sm border ${
+                className={`px-3 sm:px-6 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 backdrop-blur-sm border ${
                   selectedCategory === cat.id
                     ? 'bg-white/30 text-white border-white/50 shadow-xl ring-2 ring-white/40 backdrop-blur-3xl'
                     : 'text-gray-400 hover:text-white hover:bg-white/10 border-white/10'

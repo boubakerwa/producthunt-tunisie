@@ -4,35 +4,20 @@ import 'flag-icons/css/flag-icons.min.css';
 import { 
   TrendingUp as TrendingUpIcon, 
   Star, 
-  TrendingUp, 
   Users, 
-  Mail, 
-  ArrowRight, 
-  Globe, 
   Smartphone, 
-  Code, 
-  Briefcase,
-  Heart,
-  Coffee,
   Zap,
-  Target,
   CheckCircle,
   ChevronUp,
   Eye,
   MessageCircle,
-  Share2,
   Award,
   Layers,
   Compass,
   Github,
   Linkedin,
-  Calendar,
-  Gift,
-  Hand,
-  Home,
-  Wifi,
-  Clock,
-  Play
+  Play,
+  Home
 } from 'lucide-react';
 import Platform from './components/Platform';
 import HackerHouse from './components/HackerHouse';
@@ -72,7 +57,7 @@ function LandingPage() {
     fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(formData as any).toString()
+      body: new URLSearchParams(formData as unknown as Record<string, string>).toString()
     })
       .then(() => {
         console.log("Form successfully submitted");
@@ -116,6 +101,16 @@ function LandingPage() {
               Voir la plateforme
             </Link>
           </div>
+          
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
+            onClick={() => setIsModalOpen(true)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </nav>
       </header>
 
@@ -129,15 +124,15 @@ function LandingPage() {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-6xl md:text-8xl font-bold leading-none mb-8">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold leading-tight mb-8">
             <span className="block">Découvrez &</span>
             <span className="block bg-gradient-to-r from-red-500 via-blue-500 to-blue-600 bg-clip-text text-transparent">
               Lancez
             </span>
-            <span className="block text-5xl md:text-7xl text-gray-200 mt-4">
+            <span className="block text-3xl sm:text-4xl md:text-5xl lg:text-7xl text-gray-200 mt-4">
               les meilleurs produits
             </span>
-            <span className="block text-4xl md:text-6xl text-gray-300 mt-2 italic">
+            <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-6xl text-gray-300 mt-2 italic">
               à la Tunisienne
             </span>
           </h1>
@@ -175,7 +170,7 @@ function LandingPage() {
                 method="POST" 
                 data-netlify="true"
                 onSubmit={handleSubmit}
-                className="flex gap-3"
+                className="flex flex-col sm:flex-row gap-3"
               >
                 <input type="hidden" name="form-name" value="waitlist" />
                 <input
